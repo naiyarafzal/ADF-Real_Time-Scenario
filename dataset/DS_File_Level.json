@@ -1,0 +1,44 @@
+{
+	"name": "DS_File_Level",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_Datalake",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_conatiner": {
+				"type": "string"
+			},
+			"p_folder": {
+				"type": "string"
+			},
+			"p_filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().p_filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().p_folder",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().p_conatiner",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
