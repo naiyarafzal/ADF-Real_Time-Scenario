@@ -9,7 +9,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "ForEach1",
+						"activity": "Set variable2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -178,7 +178,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@greater(formatDateTime(variables('temp_max_value'),'yyyyMMddHHmmss'),formatDateTime(activity('Get Metadata2').output.lastModified))",
+									"value": "@less(formatDateTime(variables('temp_max_value'),'yyyyMMddHHmmss'),formatDateTime(activity('Get Metadata2').output.lastModified))",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
@@ -204,14 +204,37 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "temp_max_value",
+					"value": ""
+				}
 			}
 		],
 		"variables": {
 			"temp_max_value": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "2026-06-15T14:08:24Z"
 			},
 			"max_value": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "2026-06-15T14:08:24Z"
 			}
 		},
 		"annotations": []
