@@ -5,8 +5,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable2",
@@ -33,6 +31,7 @@
 								"value": "@variables('max_value')",
 								"type": "Expression"
 							},
+							"wildcardFileName": "*.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -63,13 +62,21 @@
 				"inputs": [
 					{
 						"referenceName": "DS_Param_Folder_Level",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"p_container": "raw",
+							"p_folder": "raw_gold_data"
+						}
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "DS_Param_Folder_Level",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"p_container": "destination",
+							"p_folder": "raw_gold_data"
+						}
 					}
 				]
 			},
@@ -121,7 +128,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
+						"value": "\n@less(\n    formatDateTime(variables('temp_max_value'), 'yyyyMMddHHmmss'),\n    formatDateTime(activity('Get Metadata2').output.lastModified, 'yyyyMMddHHmmss')\n)",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -192,7 +199,7 @@
 										},
 										"userProperties": [],
 										"typeProperties": {
-											"variableName": "max_value",
+											"variableName": "temp_max_value",
 											"value": {
 												"value": "@activity('Get Metadata2').output.lastModified",
 												"type": "Expression"
@@ -223,18 +230,21 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "temp_max_value",
-					"value": ""
+					"value": {
+						"value": "@activity('Get Metadata2').output.lastModified",
+						"type": "Expression"
+					}
 				}
 			}
 		],
 		"variables": {
 			"temp_max_value": {
 				"type": "String",
-				"defaultValue": "2026-06-15T14:08:24Z"
+				"defaultValue": "2020-06-15T14:08:24Z"
 			},
 			"max_value": {
 				"type": "String",
-				"defaultValue": "2026-06-15T14:08:24Z"
+				"defaultValue": "2020-06-15T14:08:24Z"
 			}
 		},
 		"annotations": []
