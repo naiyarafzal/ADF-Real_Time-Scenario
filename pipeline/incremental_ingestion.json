@@ -81,7 +81,7 @@
 				]
 			},
 			{
-				"name": "Get Metadata1",
+				"name": "Get Source Metadata",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -115,11 +115,11 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEachLoop",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Get Source Metadata",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -128,13 +128,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
+						"value": "@activity('Get Source Metadata').output.childItems",
 						"type": "Expression"
 					},
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Get Metadata2",
+							"name": "Get Source LastModified",
 							"type": "GetMetadata",
 							"dependsOn": [],
 							"policy": {
@@ -176,7 +176,7 @@
 							"type": "IfCondition",
 							"dependsOn": [
 								{
-									"activity": "Get Metadata2",
+									"activity": "Get Source LastModified",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -185,12 +185,12 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@less(formatDateTime(variables('temp_max_value'),'yyyyMMddHHmmss'),formatDateTime(activity('Get Metadata2').output.lastModified))",
+									"value": "@less(formatDateTime(variables('temp_max_value'),'yyyyMMddHHmmss'),formatDateTime(activity('Get Source LastModified').output.lastModified))",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
 									{
-										"name": "Set variable1",
+										"name": "Set Temp Variable",
 										"type": "SetVariable",
 										"dependsOn": [],
 										"policy": {
@@ -201,7 +201,7 @@
 										"typeProperties": {
 											"variableName": "temp_max_value",
 											"value": {
-												"value": "@activity('Get Metadata2').output.lastModified",
+												"value": "@activity('Get Source LastModified').output.lastModified",
 												"type": "Expression"
 											}
 										}
@@ -217,7 +217,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "ForEach1",
+						"activity": "ForEachLoop",
 						"dependencyConditions": [
 							"Succeeded"
 						]
