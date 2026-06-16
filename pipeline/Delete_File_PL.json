@@ -72,6 +72,17 @@
 									"value": "@less(\n    ticks(activity('Get Metadata2').output.lastModified),\n    ticks(addDays(utcNow(), mul(-1, variables('last_7_days'))))\n)",
 									"type": "Expression"
 								},
+								"ifFalseActivities": [
+									{
+										"name": "Wait1",
+										"type": "Wait",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"waitTimeInSeconds": 3
+										}
+									}
+								],
 								"ifTrueActivities": [
 									{
 										"name": "Delete1",
@@ -153,8 +164,7 @@
 		],
 		"variables": {
 			"last_7_days": {
-				"type": "Integer",
-				"defaultValue": -7
+				"type": "Integer"
 			}
 		},
 		"annotations": []
