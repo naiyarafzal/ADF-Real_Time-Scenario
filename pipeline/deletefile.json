@@ -69,7 +69,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@greater(activity('Get Metadata2').output.lastModified,addDays(utcNow(),variables('last_7_days')))\n\n",
+									"value": "@less(\n    ticks(activity('Get Metadata2').output.lastModified),\n    ticks(addDays(utcNow(), mul(-1, variables('last_7_days'))))\n)",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
