@@ -128,7 +128,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "\n@less(\n    formatDateTime(variables('temp_max_value'), 'yyyyMMddHHmmss'),\n    formatDateTime(activity('Get Metadata2').output.lastModified, 'yyyyMMddHHmmss')\n)",
+						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -229,9 +229,9 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "temp_max_value",
+					"variableName": "max_value",
 					"value": {
-						"value": "@activity('Get Metadata2').output.lastModified",
+						"value": "@variables('temp_max_value')",
 						"type": "Expression"
 					}
 				}
