@@ -1,5 +1,5 @@
 {
-	"name": "File_Count",
+	"name": "File_Count_PL",
 	"properties": {
 		"activities": [
 			{
@@ -28,6 +28,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
